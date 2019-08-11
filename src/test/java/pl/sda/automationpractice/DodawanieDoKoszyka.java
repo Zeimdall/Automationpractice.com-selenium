@@ -8,8 +8,13 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+
 
 public class DodawanieDoKoszyka {
     ChromeDriver przeglądarka;
@@ -36,7 +41,17 @@ public class DodawanieDoKoszyka {
         Thread.sleep(1500);
        listaProduktow.get(0).click();
 
+        WebDriverWait wait = new WebDriverWait(przeglądarka, 10);
+        WebElement potwierdzenieDodania = przeglądarka.findElement(By.cssSelector("#layer_cart"));
+        wait.until(ExpectedConditions.visibilityOf(potwierdzenieDodania));
+
+       przejdzDoKoszyka();
     }
+
+    private void przejdzDoKoszyka() {
+        przeglądarka.findElement(By.cssSelector("#layer_cart .button-container .button-medium")).click();
+    }
+
     @After
     public void zamknijStronę() throws InterruptedException {
 
